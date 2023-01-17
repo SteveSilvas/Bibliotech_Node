@@ -1,5 +1,5 @@
 # Bibliotech Api
-Api backend com node
+Api backend utilizando typescript, node, express, sequelize, mysql2, dotenv e HttpStatusCodes.
 
 
 Sequência de comandos para testes:
