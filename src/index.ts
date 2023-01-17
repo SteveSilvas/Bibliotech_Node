@@ -5,6 +5,7 @@ import UserRoute from "./router/user.routes";
 import BookRoute from "./router/book.routes";
 import BookCopyRoute from "./router/bookCopy.routes";
 import BookCategoryRoute from "./router/bookCategory.routes";
+import AddressRoute from "./router/address.routes";
 
 require('dotenv').config({path: '.env'});
 
@@ -18,5 +19,6 @@ api.use(UserRoute);
 api.use(BookRoute);
 api.use(BookCopyRoute);
 api.use(BookCategoryRoute);
+api.use(AddressRoute);
 
 api.listen(process.env.SERVER_PORT);
