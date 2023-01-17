@@ -1,9 +1,9 @@
 import { Sequelize, Model, DataTypes } from "sequelize";
 const database = require("../ConnectionDB");
+const Category = require("./CategoryEntity");
+database.sync({alter:true});
 
-database.sync();
-
-module.exports = database.define('Book', {
+const BookEntity = database.define('Book', {
     Id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -18,10 +18,6 @@ module.exports = database.define('Book', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    Category: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
     CreationDate: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -29,6 +25,12 @@ module.exports = database.define('Book', {
     CreationLocality: {
         type: DataTypes.STRING,
         allowNull: true,
-    },
-
+    }
 });
+
+    BookEntity.belongsTo(Category, {
+        constraint: true,
+        foreingnKey: 'CategoryId', 
+        allowNull: false});
+
+    module.exports = BookEntity;

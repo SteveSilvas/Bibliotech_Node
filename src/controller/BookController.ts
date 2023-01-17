@@ -1,11 +1,19 @@
 const BookEntity = require("../entity/BookEntity");
+const Category = require("../entity/CategoryEntity")
 import { Request, Response, NextFunction } from "express";
 import StatusCodes from "http-status-codes";
 
 module.exports = {
     async ListAll(req: Request, res: Response) {
         try {
-            const booksList = await BookEntity.findAll();
+            // const booksList = await BookEntity.findAll();
+            const booksList = await BookEntity.findAll({
+                order: [['Id', 'DESC']],
+                include: [{
+                    attributes:['Description'],
+                    model: Category
+                }]
+            });
             return res.status(StatusCodes.OK).json(booksList);
         } catch (error) {
             return console.log("Erro na lista de livros: " + error);
@@ -26,7 +34,7 @@ module.exports = {
             const book = await BookEntity.create({
                 Title: req.body.Title,
                 Autor: req.body.Autor,
-                Category: req.body.Category,
+                CategoryId: req.body.CategoryId,
                 CreationDate: req.body.CreationDate,
                 CreationLocality: req.body.CreationLocality
             });
