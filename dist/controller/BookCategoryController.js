@@ -12,72 +12,68 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const UserEntity = require("../entity/UserEntity");
+const CategoryEntity = require("../entity/CategoryEntity");
 const http_status_codes_1 = __importDefault(require("http-status-codes"));
 module.exports = {
     ListAll(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const usersList = yield UserEntity.findAll();
-                return res.status(http_status_codes_1.default.OK).json(usersList);
+                const categoriesList = yield CategoryEntity.findAll();
+                return res.status(http_status_codes_1.default.OK).json(categoriesList);
             }
             catch (error) {
-                return console.log("Erro na lista de usuários: " + error);
+                return console.log("Erro na lista de categorias: " + error);
             }
         });
     },
     GetById(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const user = yield UserEntity.findByPk(req.params.Id);
-                return res.status(http_status_codes_1.default.OK).json(user);
+                const category = yield CategoryEntity.findByPk(req.params.Id);
+                return res.status(http_status_codes_1.default.OK).json(category);
             }
             catch (error) {
-                return console.log("Erro ao buscar usuário: " + req.params.Id);
+                return console.log("Erro ao buscar Categoria - Id: " + req.params.Id);
             }
         });
     },
-    addUser(req, res, next) {
+    addCategory(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const user = yield UserEntity.create({
-                    Name: req.body.Name,
-                    Email: req.body.Email,
-                    Nascimento: req.body.Nascimento
+                const category = yield CategoryEntity.create({
+                    Description: req.body.Description
                 });
                 return console.log("Registro adicionado com sucesso.");
             }
             catch (error) {
-                return console.log("Erro ao adicionar usuário: " + error);
+                return console.log("Erro ao adicionar categoria: " + error);
             }
         });
     },
-    updateUser(req, res) {
+    updateCategory(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const userEntity = yield UserEntity.findByPk(req.body.Id);
-                if (userEntity) {
-                    userEntity.Name = req.body.Name,
-                        userEntity.Email = req.body.Email,
-                        userEntity.Nascimento = req.body.Nascimento;
-                    userEntity.save();
+                const categoryEntity = yield CategoryEntity.findByPk(req.body.Id);
+                if (categoryEntity) {
+                    categoryEntity.Description = req.body.Description;
+                    categoryEntity.save();
                 }
                 return console.log("Registro alterado com sucesso.");
             }
             catch (error) {
-                return console.log("Erro ao alterar usuário: " + error);
+                return console.log("Erro ao alterar categoria: " + error);
             }
         });
     },
-    deleteUser(req, res) {
+    deleteCategory(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const userEntity = yield UserEntity.findByPk(req.body.Id);
-                yield userEntity.destroy();
+                const categoryEntity = yield CategoryEntity.findByPk(req.body.Id);
+                yield categoryEntity.destroy();
                 return console.log("Registro excluído com sucesso.");
             }
             catch (error) {
-                return console.log("Erro ao deletar usuário: " + error);
+                return console.log("Erro ao deletar categoria: " + error);
             }
         });
     },

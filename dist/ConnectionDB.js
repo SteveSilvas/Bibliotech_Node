@@ -10,4 +10,5 @@ const dbDialect = process.env.DB_DIALECT;
 const ConnectionDB = new Sequelize(dbName, dbUser, dbPwd, {
     dialect: dbDialect, host: dbHost, port: dbPort
 });
+// ConnectionDB.sync({force:true});
 module.exports = ConnectionDB;

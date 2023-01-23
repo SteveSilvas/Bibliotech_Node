@@ -1,9 +1,9 @@
 import { Sequelize, Model, DataTypes } from "sequelize";
 const database = require("../ConnectionDB");
 
-database.sync({force:true});
+// database.sync({force:true});
 
-module.exports = database.define('Address', {
+module.exports = database.define('Addresses', {
     Id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,

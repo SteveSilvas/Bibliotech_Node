@@ -1,7 +1,8 @@
 import { Sequelize, Model, DataTypes } from "sequelize";
 const database = require("../ConnectionDB");
 const Category = require("./CategoryEntity");
-database.sync();
+
+// database.sync();
 
 const BookEntity = database.define('Book', {
     Id: {

@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const BookCopyController = require("../controller/BookCopyController");
+const UserRoute = (0, express_1.Router)();
+UserRoute.get('/books', BookCopyController.ListAll);
+UserRoute.post('/books/add', BookCopyController.addBookCopy);
+UserRoute.get('/books/:Id', BookCopyController.GetById);
+UserRoute.put('/books/update', BookCopyController.updateBookCopy);
+UserRoute.delete('/books/delete', BookCopyController.deleteBookCopy);
+exports.default = UserRoute;

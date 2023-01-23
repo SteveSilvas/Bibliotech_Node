@@ -12,72 +12,82 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const UserEntity = require("../entity/UserEntity");
+const AddressEntity = require("../entity/AddressEntity");
 const http_status_codes_1 = __importDefault(require("http-status-codes"));
 module.exports = {
     ListAll(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const usersList = yield UserEntity.findAll();
-                return res.status(http_status_codes_1.default.OK).json(usersList);
+                const addressList = yield AddressEntity.findAll();
+                return res.status(http_status_codes_1.default.OK).json(addressList);
             }
             catch (error) {
-                return console.log("Erro na lista de usuários: " + error);
+                return console.log("Erro na lista de endereços: " + error);
             }
         });
     },
     GetById(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const user = yield UserEntity.findByPk(req.params.Id);
-                return res.status(http_status_codes_1.default.OK).json(user);
+                const address = yield AddressEntity.findByPk(req.params.Id);
+                return res.status(http_status_codes_1.default.OK).json(address);
             }
             catch (error) {
-                return console.log("Erro ao buscar usuário: " + req.params.Id);
+                return console.log("Erro ao buscar endereço: " + req.params.Id);
             }
         });
     },
-    addUser(req, res, next) {
+    addAddress(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const user = yield UserEntity.create({
-                    Name: req.body.Name,
-                    Email: req.body.Email,
-                    Nascimento: req.body.Nascimento
+                const address = yield AddressEntity.create({
+                    Rua: req.body.Rua,
+                    Numero: req.body.Numero,
+                    Complemento: req.body.Complemento,
+                    Bairro: req.body.Bairro,
+                    Cep: req.body.Cep,
+                    Cidade: req.body.Cidade,
+                    Estado: req.body.Estado,
+                    Pais: req.body.Pais
                 });
                 return console.log("Registro adicionado com sucesso.");
             }
             catch (error) {
-                return console.log("Erro ao adicionar usuário: " + error);
+                return console.log("Erro ao adicionar endereço: " + error);
             }
         });
     },
-    updateUser(req, res) {
+    updateAddress(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const userEntity = yield UserEntity.findByPk(req.body.Id);
-                if (userEntity) {
-                    userEntity.Name = req.body.Name,
-                        userEntity.Email = req.body.Email,
-                        userEntity.Nascimento = req.body.Nascimento;
-                    userEntity.save();
+                const addressEntity = yield AddressEntity.findByPk(req.body.Id);
+                if (addressEntity) {
+                    addressEntity.Rua = req.body.Rua,
+                        addressEntity.Numero = req.body.Numero,
+                        addressEntity.Complemento = req.body.Complemento,
+                        addressEntity.Bairro = req.body.Bairro,
+                        addressEntity.Cep = req.body.Cep,
+                        addressEntity.Cidade = req.body.Cidade,
+                        addressEntity.Estado = req.body.Estado,
+                        addressEntity.Pais = req.body.Pais,
+                        addressEntity.save();
                 }
                 return console.log("Registro alterado com sucesso.");
             }
             catch (error) {
-                return console.log("Erro ao alterar usuário: " + error);
+                return console.log("Erro ao alterar endereço: " + error);
             }
         });
     },
-    deleteUser(req, res) {
+    deleteAddress(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const userEntity = yield UserEntity.findByPk(req.body.Id);
+                const userEntity = yield AddressEntity.findByPk(req.body.Id);
                 yield userEntity.destroy();
                 return console.log("Registro excluído com sucesso.");
             }
             catch (error) {
-                return console.log("Erro ao deletar usuário: " + error);
+                return console.log("Erro ao deletar endereço: " + error);
             }
         });
     },

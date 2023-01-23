@@ -12,72 +12,84 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const UserEntity = require("../entity/UserEntity");
+const BookEntity = require("../entity/BookEntity");
+const Category = require("../entity/CategoryEntity");
 const http_status_codes_1 = __importDefault(require("http-status-codes"));
 module.exports = {
     ListAll(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const usersList = yield UserEntity.findAll();
-                return res.status(http_status_codes_1.default.OK).json(usersList);
+                // const booksList = await BookEntity.findAll();
+                const booksList = yield BookEntity.findAll({
+                    order: [['Id', 'DESC']],
+                    include: [{
+                            attributes: ['Description'],
+                            model: Category
+                        }]
+                });
+                return res.status(http_status_codes_1.default.OK).json(booksList);
             }
             catch (error) {
-                return console.log("Erro na lista de usuários: " + error);
+                return console.log("Erro na lista de livros: " + error);
             }
         });
     },
     GetById(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const user = yield UserEntity.findByPk(req.params.Id);
-                return res.status(http_status_codes_1.default.OK).json(user);
+                const book = yield BookEntity.findByPk(req.params.Id);
+                return res.status(http_status_codes_1.default.OK).json(book);
             }
             catch (error) {
-                return console.log("Erro ao buscar usuário: " + req.params.Id);
+                return console.log("Erro ao buscar livro - Id: " + req.params.Id);
             }
         });
     },
-    addUser(req, res, next) {
+    addBook(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const user = yield UserEntity.create({
-                    Name: req.body.Name,
-                    Email: req.body.Email,
-                    Nascimento: req.body.Nascimento
+                const book = yield BookEntity.create({
+                    Title: req.body.Title,
+                    Autor: req.body.Autor,
+                    CategoryId: req.body.CategoryId,
+                    CreationDate: req.body.CreationDate,
+                    CreationLocality: req.body.CreationLocality
                 });
                 return console.log("Registro adicionado com sucesso.");
             }
             catch (error) {
-                return console.log("Erro ao adicionar usuário: " + error);
+                return console.log("Erro ao adicionar livro: " + error);
             }
         });
     },
-    updateUser(req, res) {
+    updateBook(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const userEntity = yield UserEntity.findByPk(req.body.Id);
-                if (userEntity) {
-                    userEntity.Name = req.body.Name,
-                        userEntity.Email = req.body.Email,
-                        userEntity.Nascimento = req.body.Nascimento;
-                    userEntity.save();
+                const bookEntity = yield BookEntity.findByPk(req.body.Id);
+                if (bookEntity) {
+                    bookEntity.Title = req.body.Title,
+                        bookEntity.Autor = req.body.Autor,
+                        bookEntity.Category = req.body.Category,
+                        bookEntity.CreationDate = req.body.CreationDate,
+                        bookEntity.CreationLocality = req.body.CreationLocality,
+                        bookEntity.save();
                 }
                 return console.log("Registro alterado com sucesso.");
             }
             catch (error) {
-                return console.log("Erro ao alterar usuário: " + error);
+                return console.log("Erro ao alterar livro: " + error);
             }
         });
     },
-    deleteUser(req, res) {
+    deleteBook(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const userEntity = yield UserEntity.findByPk(req.body.Id);
+                const userEntity = yield BookEntity.findByPk(req.body.Id);
                 yield userEntity.destroy();
                 return console.log("Registro excluído com sucesso.");
             }
             catch (error) {
-                return console.log("Erro ao deletar usuário: " + error);
+                return console.log("Erro ao deletar livro: " + error);
             }
         });
     },

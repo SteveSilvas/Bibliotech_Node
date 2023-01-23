@@ -1,7 +1,7 @@
 import { Sequelize, Model, DataTypes } from "sequelize";
 const database = require("../ConnectionDB");
 
-database.sync();
+// database.sync({force:true});
 
 module.exports = database.define('BookCopy', {
     Id: {
