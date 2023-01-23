@@ -10,7 +10,7 @@ var cors = require("cors");
 require('dotenv').config({path: '.env'});
 
 const api = express();
-
+const serverPort = process.env.SERVER_PORT || 3000;
 api.use(express.json());
 
 
@@ -29,7 +29,7 @@ api.use(AddressRoute);
 //     api.use(cors());
 //     next();
 // });
-api.use(cors({ origin: ['http://localhost:3000','http://localhost:3000/']}))
+api.use(cors());
 
 // api.use((req,res,next)=>{
 //     res.setHeader('Access-Control-Allow-Origin','*');
@@ -38,4 +38,4 @@ api.use(cors({ origin: ['http://localhost:3000','http://localhost:3000/']}))
 //     next(); 
 // })
 
-api.listen(process.env.SERVER_PORT);
+api.listen(serverPort);
