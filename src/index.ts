@@ -10,7 +10,7 @@ var cors = require("cors");
 require('dotenv').config({path: '.env'});
 
 const api = express();
-const serverPort = process.env.SERVER_PORT || 3000;
+const serverPort = process.env.PORT || 3000;
 api.use(express.json());
 
 
