@@ -26,7 +26,7 @@ module.exports = {
             const user = await UserEntity.create({
                 Name: req.body.Name,
                 Email: req.body.Email,
-                Nascimento: req.body.Nascimento
+                Nascimento: req.body.Birth
             });
             return console.log("Registro adicionado com sucesso.");
         
