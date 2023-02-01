@@ -21,15 +21,53 @@ module.exports = {
         }
     },
 
+    async GetByEmail(req: Request, res: Response) {
+        try {
+            const users = await UserEntity.findAll();
+            users.map((user: any) => {
+                if (user.Email === req.params.Email) {
+                    return res.status(StatusCodes.OK).json(user);
+                }
+            });
+            return res
+                .status(StatusCodes.BAD_REQUEST)
+                .json("usuário não encontrado com o email " + req.params.Email);
+        } catch (error) {
+            return console.log("Erro ao buscar usuário: " + req.params.Email);
+        }
+    },
+
     async addUser(req: Request, res: Response, next: NextFunction) {
         try {
             const user = await UserEntity.create({
                 Name: req.body.Name,
+                Birth: req.body.Birth,
                 Email: req.body.Email,
-                Nascimento: req.body.Birth
+                Pass: req.body.Pass,
             });
             return console.log("Registro adicionado com sucesso.");
-        
+        } catch (error) {
+            return console.log("Erro ao adicionar usuário: " + error);
+        }
+    },
+
+    async login(req: Request, res: Response, next: NextFunction) {
+        try {
+            const users = await UserEntity.findAll();
+            users.map((user: any) => {
+                if (user.Email === req.body.data.Email) {
+                    if (user.Pass === req.body.data.Pass) {
+                        return res.status(StatusCodes.OK).json(user);
+                    }else{
+                        return res.status(StatusCodes.BAD_REQUEST).send("Senhas não conferem")
+                    }
+                }else{
+                    return res.status(StatusCodes.BAD_REQUEST).send("Usuário não encontrado")
+                }
+
+            });
+
+            return console.log("Registro adicionado com sucesso.");
         } catch (error) {
             return console.log("Erro ao adicionar usuário: " + error);
         }
@@ -39,14 +77,13 @@ module.exports = {
         try {
             const userEntity = await UserEntity.findByPk(req.body.Id);
             if (userEntity) {
-                userEntity.Name= req.body.Name,
-                userEntity.Email= req.body.Email,
-                userEntity.Nascimento= req.body.Nascimento
+                (userEntity.Name = req.body.Name),
+                    (userEntity.Email = req.body.Email),
+                    (userEntity.Nascimento = req.body.Nascimento);
                 userEntity.save();
             }
 
             return console.log("Registro alterado com sucesso.");
-        
         } catch (error) {
             return console.log("Erro ao alterar usuário: " + error);
         }

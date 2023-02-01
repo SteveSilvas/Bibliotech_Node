@@ -14,12 +14,16 @@ module.exports = database.define('User', {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    Birth: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    },
     Email: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    Nascimento: {
-        type: DataTypes.DATE,
+    Pass: {
+        type: DataTypes.STRING,
         allowNull: false,
     }
 });

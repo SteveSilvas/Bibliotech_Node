@@ -31,12 +31,13 @@ module.exports = {
 
     async addBook(req: Request, res: Response, next: NextFunction) {
         try {
+            console.log(req.body)
             const book = await BookEntity.create({
-                Title: req.body.Title,
-                Autor: req.body.Autor,
-                CategoryId: req.body.CategoryId,
-                CreationDate: req.body.CreationDate,
-                CreationLocality: req.body.CreationLocality
+                Title: req.body.data.Title,
+                Autor: req.body.data.Autor,
+                CategoryId: req.body.data.CategoryId,
+                CreationDate: req.body.data.CreationDate,
+                CreationLocality: req.body.data.CreationLocality
             });
             return console.log("Registro adicionado com sucesso.");
         

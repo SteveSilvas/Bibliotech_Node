@@ -21,7 +21,7 @@ const BookEntity = database.define('Book', {
     },
     CreationDate: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
     },
     CreationLocality: {
         type: DataTypes.STRING,

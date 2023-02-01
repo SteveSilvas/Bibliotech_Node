@@ -6,7 +6,11 @@ UserRoute.get('/users', UserController.ListAll);
 
 UserRoute.post('/users/add', UserController.addUser);
 
-UserRoute.get('/users/:Id', UserController.GetById);
+UserRoute.post('/users/login', UserController.login);
+
+UserRoute.get('/users/:id', UserController.GetById);
+
+UserRoute.get('/users/:email', UserController.GetByEmail);
 
 UserRoute.put('/users/update', UserController.updateUser);
 
