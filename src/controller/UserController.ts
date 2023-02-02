@@ -8,7 +8,7 @@ module.exports = {
             const usersList = await UserEntity.findAll();
             return res.status(StatusCodes.OK).json(usersList);
         } catch (error) {
-            return console.log("Erro na lista de usuários: " + error);
+            return res.status(StatusCodes.BAD_REQUEST).send("Erro na lista de usuários: " + error);
         }
     },
 
@@ -17,7 +17,7 @@ module.exports = {
             const user = await UserEntity.findByPk(req.params.Id);
             return res.status(StatusCodes.OK).json(user);
         } catch (error) {
-            return console.log("Erro ao buscar usuário: " + req.params.Id);
+            return res.status(StatusCodes.BAD_REQUEST).send("Erro ao buscar usuário: " + req.params.Id);
         }
     },
 
@@ -31,9 +31,9 @@ module.exports = {
             });
             return res
                 .status(StatusCodes.BAD_REQUEST)
-                .json("usuário não encontrado com o email " + req.params.Email);
+                .json("Usuário não encontrado com o email " + req.params.Email);
         } catch (error) {
-            return console.log("Erro ao buscar usuário: " + req.params.Email);
+            return res.status(StatusCodes.BAD_REQUEST).send("Erro ao buscar usuário: " + req.params.Email);
         }
     },
 
@@ -45,9 +45,9 @@ module.exports = {
                 Email: req.body.Email,
                 Pass: req.body.Pass,
             });
-            return console.log("Registro adicionado com sucesso.");
+            return res.status(StatusCodes.CREATED).send("Usuário adicionado com sucesso.");
         } catch (error) {
-            return console.log("Erro ao adicionar usuário: " + error);
+            return res.status(StatusCodes.BAD_REQUEST).send("Erro ao adicionar usuário: " + error);
         }
     },
 
@@ -67,9 +67,9 @@ module.exports = {
 
             });
 
-            return console.log("Registro adicionado com sucesso.");
+            return res.status(StatusCodes.OK).send("Usuário logado com sucesso.");
         } catch (error) {
-            return console.log("Erro ao adicionar usuário: " + error);
+            return res.status(StatusCodes.BAD_REQUEST).send("Erro no login usuário: " + error);
         }
     },
 
@@ -83,9 +83,9 @@ module.exports = {
                 userEntity.save();
             }
 
-            return console.log("Registro alterado com sucesso.");
+            return res.status(StatusCodes.OK).send("Usuário alterado com sucesso.");
         } catch (error) {
-            return console.log("Erro ao alterar usuário: " + error);
+            return res.status(StatusCodes.BAD_REQUEST).send("Erro ao alterar usuário: " + error);
         }
     },
 
@@ -93,9 +93,9 @@ module.exports = {
         try {
             const userEntity = await UserEntity.findByPk(req.body.Id);
             await userEntity.destroy();
-            return console.log("Registro excluído com sucesso.");
+            return res.status(StatusCodes.OK).send("Usuário excluído com sucesso.");
         } catch (error) {
-            return console.log("Erro ao deletar usuário: " + error);
+            return res.status(StatusCodes.BAD_REQUEST).send("Erro ao deletar usuário: " + error);
         }
     },
 };

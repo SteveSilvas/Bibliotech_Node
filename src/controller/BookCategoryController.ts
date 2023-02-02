@@ -8,7 +8,7 @@ module.exports = {
             const categoriesList = await CategoryEntity.findAll();
             return res.status(StatusCodes.OK).json(categoriesList);
         } catch (error) {
-            return console.log("Erro na lista de categorias: " + error);
+            return res.status(StatusCodes.BAD_REQUEST).send("Erro na lista de categorias: " + error);
         }
     },
 
@@ -17,7 +17,7 @@ module.exports = {
             const category = await CategoryEntity.findByPk(req.params.Id);
             return res.status(StatusCodes.OK).json(category);
         } catch (error) {
-            return console.log("Erro ao buscar Categoria - Id: " + req.params.Id);
+            return res.status(StatusCodes.BAD_REQUEST).send("Erro ao buscar Categoria - Id: " + req.params.Id);
         }
     },
 
@@ -26,10 +26,10 @@ module.exports = {
             const category = await CategoryEntity.create({
                 Description: req.body.Description
             });
-            return console.log("Registro adicionado com sucesso.");
+            return res.status(StatusCodes.CREATED).send("Categoria adicionada com sucesso.");
         
         } catch (error) {
-            return console.log("Erro ao adicionar categoria: " + error);
+            return res.status(StatusCodes.BAD_REQUEST).send("Erro ao adicionar categoria: " + error);
         }
     },
 
@@ -41,10 +41,10 @@ module.exports = {
                 categoryEntity.save();
             }
 
-            return console.log("Registro alterado com sucesso.");
+            return res.status(StatusCodes.OK).send("Categoria alterada com sucesso.");
         
         } catch (error) {
-            return console.log("Erro ao alterar categoria: " + error);
+            return res.status(StatusCodes.BAD_REQUEST).send("Erro ao alterar categoria: " + error);
         }
     },
 
@@ -52,9 +52,9 @@ module.exports = {
         try {
             const categoryEntity = await CategoryEntity.findByPk(req.body.Id);
             await categoryEntity.destroy();
-            return console.log("Registro excluído com sucesso.");
+            return res.status(StatusCodes.OK).send("Categoria excluída com sucesso.");
         } catch (error) {
-            return console.log("Erro ao deletar categoria: " + error);
+            return res.status(StatusCodes.BAD_REQUEST).send("Erro ao deletar categoria: " + error);
         }
     },
 };

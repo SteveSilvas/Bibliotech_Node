@@ -6,7 +6,6 @@ import StatusCodes from "http-status-codes";
 module.exports = {
     async ListAll(req: Request, res: Response) {
         try {
-            // const booksList = await BookEntity.findAll();
             const booksList = await BookEntity.findAll({
                 order: [['Id', 'DESC']],
                 include: [{
@@ -16,7 +15,7 @@ module.exports = {
             });
             return res.status(StatusCodes.OK).json(booksList);
         } catch (error) {
-            return console.log("Erro na lista de livros: " + error);
+            return res.status(StatusCodes.BAD_REQUEST).send("Erro na lista de livros: " + error);
         }
     },
 
@@ -25,7 +24,7 @@ module.exports = {
             const book = await BookEntity.findByPk(req.params.Id);
             return res.status(StatusCodes.OK).json(book);
         } catch (error) {
-            return console.log("Erro ao buscar livro - Id: " + req.params.Id);
+            return res.status(StatusCodes.BAD_REQUEST).send("Erro ao buscar livro - Id: " + req.params.Id);
         }
     },
 
@@ -39,10 +38,10 @@ module.exports = {
                 CreationDate: req.body.data.CreationDate,
                 CreationLocality: req.body.data.CreationLocality
             });
-            return console.log("Registro adicionado com sucesso.");
+            return res.status(StatusCodes.CREATED).send("Livro adicionado com sucesso.");
         
         } catch (error) {
-            return console.log("Erro ao adicionar livro: " + error);
+            return res.status(StatusCodes.BAD_REQUEST).send("Erro ao adicionar livro: " + error);
         }
     },
 
@@ -59,10 +58,10 @@ module.exports = {
                 bookEntity.save();
             }
 
-            return console.log("Registro alterado com sucesso.");
+            return res.status(StatusCodes.OK).send("Livro alterado com sucesso.");
         
         } catch (error) {
-            return console.log("Erro ao alterar livro: " + error);
+            return res.status(StatusCodes.BAD_REQUEST).send("Erro ao alterar livro: " + error);
         }
     },
 
@@ -70,9 +69,9 @@ module.exports = {
         try {
             const userEntity = await BookEntity.findByPk(req.body.Id);
             await userEntity.destroy();
-            return console.log("Registro excluído com sucesso.");
+            return res.status(StatusCodes.OK).send("Livro excluído com sucesso.");
         } catch (error) {
-            return console.log("Erro ao deletar livro: " + error);
+            return res.status(StatusCodes.BAD_REQUEST).send("Erro ao deletar livro: " + error);
         }
     },
 };

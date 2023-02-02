@@ -8,7 +8,7 @@ module.exports = {
             const addressList = await AddressEntity.findAll();
             return res.status(StatusCodes.OK).json(addressList);
         } catch (error) {
-            return console.log("Erro na lista de endereços: " + error);
+            return res.status(StatusCodes.BAD_REQUEST).send("Erro na lista de endereços: " + error);
         }
     },
 
@@ -17,7 +17,7 @@ module.exports = {
             const address = await AddressEntity.findByPk(req.params.Id);
             return res.status(StatusCodes.OK).json(address);
         } catch (error) {
-            return console.log("Erro ao buscar endereço: " + req.params.Id);
+            return res.status(StatusCodes.BAD_REQUEST).send("Erro ao buscar endereço: " + req.params.Id);
         }
     },
 
@@ -33,10 +33,10 @@ module.exports = {
                 Estado: req.body.Estado,
                 Pais: req.body.Pais
             });
-            return console.log("Registro adicionado com sucesso.");
+            return res.status(StatusCodes.CREATED).send("Endereço adicionado com sucesso.");
         
         } catch (error) {
-            return console.log("Erro ao adicionar endereço: " + error);
+            return res.status(StatusCodes.BAD_REQUEST).send("Erro ao adicionar endereço: " + error);
         }
     },
 
@@ -56,10 +56,10 @@ module.exports = {
                 addressEntity.save();
             }
 
-            return console.log("Registro alterado com sucesso.");
+            return res.status(StatusCodes.OK).send("Endereço alterado com sucesso.");
         
         } catch (error) {
-            return console.log("Erro ao alterar endereço: " + error);
+            return res.status(StatusCodes.BAD_REQUEST).send("Erro ao alterar endereço: " + error);
         }
     },
 
@@ -67,9 +67,9 @@ module.exports = {
         try {
             const userEntity = await AddressEntity.findByPk(req.body.Id);
             await userEntity.destroy();
-            return console.log("Registro excluído com sucesso.");
+            return res.status(StatusCodes.OK).send("Endereço excluído com sucesso.");
         } catch (error) {
-            return console.log("Erro ao deletar endereço: " + error);
+            return res.status(StatusCodes.BAD_REQUEST).send("Erro ao deletar endereço: " + error);
         }
     },
 };

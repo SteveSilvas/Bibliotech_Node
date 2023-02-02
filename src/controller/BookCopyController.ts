@@ -8,7 +8,7 @@ module.exports = {
             const bookCopiysList = await BookCopyEntity.findAll();
             return res.status(StatusCodes.OK).json(bookCopiysList);
         } catch (error) {
-            return console.log("Erro na lista de exemplares: " + error);
+            return res.status(StatusCodes.BAD_REQUEST).send("Erro na lista de exemplares: " + error);
         }
     },
 
@@ -17,7 +17,7 @@ module.exports = {
             const bookCopy = await BookCopyEntity.findByPk(req.params.Id);
             return res.status(StatusCodes.OK).json(bookCopy);
         } catch (error) {
-            return console.log("Erro ao buscar exemplar - Id: " + req.params.Id);
+            return res.status(StatusCodes.BAD_REQUEST).send("Erro ao buscar exemplar - Id: " + req.params.Id);
         }
     },
 
@@ -28,10 +28,10 @@ module.exports = {
                 Email: req.body.Email,
                 Nascimento: req.body.Nascimento
             });
-            return console.log("Registro adicionado com sucesso.");
+            return res.status(StatusCodes.CREATED).send("Exemplar adicionado com sucesso.");
         
         } catch (error) {
-            return console.log("Erro ao adicionar exemplar: " + error);
+            return res.status(StatusCodes.BAD_REQUEST).send("Erro ao adicionar exemplar: " + error);
         }
     },
 
@@ -47,10 +47,10 @@ module.exports = {
                 bookCopyEntity.save();
             }
 
-            return console.log("Registro alterado com sucesso.");
+            return res.status(StatusCodes.OK).send("Exemplar alterado com sucesso.");
         
         } catch (error) {
-            return console.log("Erro ao alterar exemplar: " + error);
+            return res.status(StatusCodes.BAD_REQUEST).send("Erro ao alterar exemplar: " + error);
         }
     },
 
@@ -58,9 +58,9 @@ module.exports = {
         try {
             const bookCopyEntity = await BookCopyEntity.findByPk(req.body.Id);
             await bookCopyEntity.destroy();
-            return console.log("Registro excluído com sucesso.");
+            return res.status(StatusCodes.OK).send("Exemplar excluído com sucesso.");
         } catch (error) {
-            return console.log("Erro ao deletar exemplar: " + error);
+            return res.status(StatusCodes.BAD_REQUEST).send("Erro ao deletar exemplar: " + error);
         }
     },
 };
