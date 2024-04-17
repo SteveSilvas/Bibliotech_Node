@@ -54,22 +54,23 @@ module.exports = {
     async login(req: Request, res: Response, next: NextFunction) {
         try {
             const users = await UserEntity.findAll();
+            let found = false;
             users.map((user: any) => {
-                if (user.Email === req.body.data.Email) {
-                    if (user.Pass === req.body.data.Pass) {
-                        return res.status(StatusCodes.OK).json(user);
-                    }else{
-                        return res.status(StatusCodes.BAD_REQUEST).send("Senhas não conferem")
+                if (user.Email == req.body.data.Email) {
+                    if (user.Pass == req.body.data.Pass) {
+                        found = true;
+                        return res.status(StatusCodes.OK).send(user);
+                    } else {
+                        return res.status(StatusCodes.BAD_REQUEST).send("Senhas não conferem");
                     }
-                }else{
-                    return res.status(StatusCodes.BAD_REQUEST).send("Usuário não encontrado")
                 }
-
             });
-
-            return res.status(StatusCodes.OK).send("Usuário logado com sucesso.");
+            // if (!found) {
+            //     return res.status(StatusCodes.BAD_REQUEST).send("Usuário não encontrado");
+            // }
         } catch (error) {
-            return res.status(StatusCodes.BAD_REQUEST).send("Erro no login usuário: " + error);
+            // return res.status(StatusCodes.BAD_REQUEST).send("Erro no login usuário: " + error);
+            console.log(error)
         }
     },
 
